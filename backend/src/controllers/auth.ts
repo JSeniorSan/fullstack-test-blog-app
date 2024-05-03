@@ -1,4 +1,3 @@
-import { validationResult } from 'express-validator'
 import { Request, Response } from 'express'
 import UserModel from '../db/users.js'
 import { hashingPassword } from '../utils/passwordHash.js'
@@ -8,10 +7,6 @@ import { ModyfiedRequest } from '../middlewares/checkAuth.js'
 
 export const registration = async (req: Request, res: Response) => {
   try {
-    const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-      return res.status(400).json(errors.array())
-    }
     const password = req.body.password
     const hashedPassword = hashingPassword(password)
 
@@ -30,7 +25,7 @@ export const registration = async (req: Request, res: Response) => {
       },
       'secretkey',
       {
-        expiresIn: '15m',
+        expiresIn: '30d',
       },
     )
 
@@ -74,7 +69,7 @@ export const login = async (req: Request, res: Response) => {
         _id: user._id,
       },
       'secretkey',
-      { expiresIn: '15m' },
+      { expiresIn: '30d' },
     )
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
