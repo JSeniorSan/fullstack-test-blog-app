@@ -1,10 +1,12 @@
 import express from 'express'
-import home from './home.js'
 import auth from './auth.js'
+import post from './post.js'
+import upload from './upload.js'
 const router = express.Router()
 
 export default (): express.Router => {
   auth(router)
-  home(router)
+  post(router)
+  upload(router)
   return router
 }

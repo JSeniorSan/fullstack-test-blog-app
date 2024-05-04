@@ -17,7 +17,7 @@ app.use(
     credentials: true,
   }),
 )
-
+app.use('/uploads', express.static('src/uploads'))
 app.use(cookieParser())
 app.use(bodyParser.json())
 

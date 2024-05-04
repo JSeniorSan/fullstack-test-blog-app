@@ -5,7 +5,7 @@ export interface ModyfiedRequest extends Request {
   userId?: string
 }
 
-export const checkAuth = async (req: ModyfiedRequest, res: Response, next: NextFunction) => {
+export default async (req: ModyfiedRequest, res: Response, next: NextFunction) => {
   const token = (req.headers.authorization || '').replace(/Bearer\s?/, '')
 
   if (token) {
