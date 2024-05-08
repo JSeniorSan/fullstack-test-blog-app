@@ -28,7 +28,7 @@ export interface Post {
   children?: React.ReactNode;
   isFullPost?: boolean;
   isLoading?: boolean;
-  isEditable: boolean;
+  isEditable?: boolean;
 }
 
 const Post = (props: Post) => {

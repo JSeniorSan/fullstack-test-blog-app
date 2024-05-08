@@ -1,11 +1,11 @@
 import { Route, Routes } from "react-router-dom";
 import Header from "../widgets/header";
 import { Container } from "@mui/material";
-import Home from "./home";
 import { FullPost } from "./fullPost/fullPost";
 import { AddPost } from "./addPost/add-post";
 import { Login } from "./login/login";
 import { Registration } from "./register/register";
+import { Home } from "./home";
 
 function App() {
   return (
