@@ -1,5 +1,6 @@
 import { Button, Container } from "@mui/material";
 import styles from "./header.module.scss";
+import { Link } from "react-router-dom";
 const Header = () => {
   const isAuth = false;
 
@@ -7,27 +8,27 @@ const Header = () => {
     <header className={styles.root}>
       <Container maxWidth="lg">
         <div className={styles.inner}>
-          <a href="/">
+          <Link to="/">
             <Button>Vladimir_YK Blog</Button>
-          </a>
+          </Link>
           <div>
             {isAuth ? (
               <>
-                <a>
+                <Link to={"/create"}>
                   <Button>Написать статью</Button>
-                </a>
-                <a>
+                </Link>
+                <Link to={"/"}>
                   <Button>Выйти</Button>
-                </a>
+                </Link>
               </>
             ) : (
               <>
-                <a>
+                <Link to={"/login"}>
                   <Button>Войти</Button>
-                </a>
-                <a>
-                  <Button>Создать аккаут</Button>
-                </a>
+                </Link>
+                <Link to={"/register"}>
+                  <Button>Создать аккаунт</Button>
+                </Link>
               </>
             )}
           </div>

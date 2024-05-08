@@ -2,6 +2,10 @@ import { Route, Routes } from "react-router-dom";
 import Header from "../widgets/header";
 import { Container } from "@mui/material";
 import Home from "./home";
+import { FullPost } from "./fullPost/fullPost";
+import { AddPost } from "./addPost/add-post";
+import { Login } from "./login/login";
+import { Registration } from "./register/register";
 
 function App() {
   return (
@@ -10,6 +14,10 @@ function App() {
       <Container maxWidth="lg">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/posts/:id" element={<FullPost />} />
+          <Route path="/post-add" element={<AddPost />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/registration" element={<Registration />} />
         </Routes>
       </Container>
     </>
