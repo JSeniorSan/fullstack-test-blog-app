@@ -8,10 +8,11 @@ import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import Skeleton from "@mui/material/Skeleton";
 import { SideBlock } from "../../shared/components/side-block/side-block";
-import { User } from "../post/post";
+
+import { PostUser } from "../post/post";
 
 export interface Items {
-  user: User;
+  user: PostUser;
   text: string;
 }
 

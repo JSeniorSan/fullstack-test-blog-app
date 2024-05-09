@@ -11,20 +11,20 @@ import React from "react";
 import { UserInfo } from "../user/user-info";
 import { Link } from "react-router-dom";
 
-export interface User {
-  fullName: string;
-  avatarUrl: string;
+export interface PostUser {
+  fullname?: string;
+  avatarUrl?: string;
 }
 
 export interface Post {
-  id: number;
-  title: string;
-  createdAt: string;
-  imageUrl: string;
-  user: User;
-  viewsCount: number;
-  commentsCount: number;
-  tags: string[];
+  id?: string;
+  title?: string;
+  createdAt?: string;
+  imageUrl?: string;
+  user?: PostUser;
+  viewsCount?: number;
+  commentsCount?: number;
+  tags?: string[];
   children?: React.ReactNode;
   isFullPost?: boolean;
   isLoading?: boolean;
@@ -75,18 +75,20 @@ const Post = (props: Post) => {
         />
       )}
       <div className={styles.wrapper}>
-        <UserInfo {...user} additionalText={createdAt} />
+        {createdAt && <UserInfo {...user} additionalText={createdAt} />}
+
         <div className={styles.indention}>
           <h2
             className={clsx(styles.title, { [styles.titleFull]: isFullPost })}>
             {isFullPost ? title : <Link to={`/posts/${id}`}>{title}</Link>}
           </h2>
           <ul className={styles.tags}>
-            {tags.map((name) => (
-              <li key={name}>
-                <Link to={`/tag/${name}`}>#{name}</Link>
-              </li>
-            ))}
+            {tags &&
+              tags.map((name) => (
+                <li key={name}>
+                  <Link to={`/tag/${name}`}>#{name}</Link>
+                </li>
+              ))}
           </ul>
           {children && <div className={styles.content}>{children}</div>}
           <ul className={styles.postDetails}>
