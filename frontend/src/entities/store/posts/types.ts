@@ -1,10 +1,5 @@
-export interface UserData {
-  fullname: string;
-  email: string;
-  _id: string;
-  createdAt: string;
-  updatedAt: string;
-}
+import { UserData } from "../auth/types";
+import { Status } from "../types";
 
 export interface PostsInitialData {
   items: PostActionData[];
@@ -19,8 +14,6 @@ export interface PostState {
   posts: PostsInitialData;
   tags: TagsInitialData;
 }
-
-export type Status = "loading" | "loaded" | "error";
 
 export interface PostActionData {
   createdAt: string;

@@ -22,11 +22,11 @@ export const getTags = createAsyncThunk("posts/fetchTags", async () => {
 const initialState: PostState = {
   posts: {
     items: [],
-    status: "loading",
+    status: "idle",
   },
   tags: {
     items: [],
-    status: "loading",
+    status: "idle",
   },
 };
 
