@@ -52,6 +52,9 @@ export const getOne = async (req: Request, res: Response) => {
       },
       { returnDocument: 'after' },
     )
+      .populate('user')
+      .exec()
+
     if (!post) {
       return res.status(404).json({
         message: 'Не был найден документ',
