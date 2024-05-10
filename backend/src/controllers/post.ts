@@ -4,7 +4,13 @@ import { ModyfiedRequest } from '../middlewares/checkAuth.js'
 
 export const getAll = async (req: Request, res: Response) => {
   try {
-    const allPosts = await PostModel.find().populate('user').exec()
+    const allPosts = await PostModel.find()
+      .populate({
+        path: 'user',
+        select: '-passwordHash',
+      })
+      .exec()
+
     if (!allPosts) {
       return res.status(400).json({
         message: 'Нет постов',
@@ -52,6 +58,9 @@ export const getOne = async (req: Request, res: Response) => {
       },
       { returnDocument: 'after' },
     )
+      .populate('user')
+      .exec()
+
     if (!post) {
       return res.status(404).json({
         message: 'Не был найден документ',
