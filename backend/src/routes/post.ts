@@ -8,5 +8,5 @@ export default (router: express.Router) => {
   router.post('/posts', checkAuth, postValidator, handleErrorsValidation, create)
   router.patch('/posts/:id', checkAuth, postValidator, handleErrorsValidation, patch)
   router.delete('/posts/:id', checkAuth, deletePost)
-  router.get('/posts/:id', checkAuth, getOne)
+  router.get('/posts/:id', getOne)
 }
