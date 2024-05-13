@@ -9,6 +9,7 @@ const Header = () => {
 
   const exitHandle = () => {
     dispatch(logout());
+    window.localStorage.removeItem("token");
   };
 
   return (
@@ -22,19 +23,21 @@ const Header = () => {
             {isAuth ? (
               <>
                 <Link to={"/create"}>
-                  <Button>Написать статью</Button>
+                  <Button variant="outlined">Написать статью</Button>
                 </Link>
                 <Link to={"/"}>
-                  <Button onClick={exitHandle}>Выйти</Button>
+                  <Button onClick={exitHandle} type="reset">
+                    Выйти
+                  </Button>
                 </Link>
               </>
             ) : (
               <>
                 <Link to={"/login"}>
-                  <Button>Войти</Button>
+                  <Button variant="contained">Войти</Button>
                 </Link>
                 <Link to={"/register"}>
-                  <Button>Создать аккаунт</Button>
+                  <Button variant="text"> Создать аккаунт</Button>
                 </Link>
               </>
             )}

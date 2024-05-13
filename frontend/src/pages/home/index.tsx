@@ -12,9 +12,8 @@ import { PostActionData } from "../../entities/store/posts/types";
 export const Home = () => {
   const dispatch = useAppDispatch();
   const postsSelector = useAppSelector((state) => state.posts.posts);
+  const currentUserId = useAppSelector((state) => state.auth.data?._id);
   const { items, status } = useAppSelector((state) => state.posts.tags);
-
-  console.log(postsSelector);
 
   const isTagsLoading = status === "loading";
   const isPostLoading = postsSelector.status === "loading";
@@ -53,7 +52,7 @@ export const Home = () => {
                   viewsCount={item.viewsCount}
                   commentsCount={3}
                   tags={item.tags}
-                  isEditable
+                  isEditable={currentUserId === item.user._id}
                   key={item._id}
                 />
               );

@@ -17,6 +17,7 @@ export const fetchLogin = createAsyncThunk<
     }
   }
 });
+
 export const fetchRegister = createAsyncThunk<
   AuthResponse,
   { email: string; password: string; fullname: string },
@@ -34,6 +35,20 @@ export const fetchRegister = createAsyncThunk<
     } catch (error) {
       if (error instanceof Error) {
         return rejectWithValue(error.message);
+      }
+    }
+  }
+);
+
+export const fetchMe = createAsyncThunk<AuthResponse>(
+  "auth/fetchMe",
+  async () => {
+    try {
+      const response = await AuthService.fetchMe();
+      return response.data;
+    } catch (error) {
+      if (error instanceof Error) {
+        return console.log(error.message);
       }
     }
   }
@@ -81,6 +96,22 @@ const authSlice = createSlice({
       }
     );
     builder.addCase(fetchRegister.rejected, (state) => {
+      state.data = null;
+      state.status = "error";
+    });
+    // --------------------------------------------------
+    builder.addCase(fetchMe.pending, (state) => {
+      state.status = "loading";
+      state.data = null;
+    });
+    builder.addCase(
+      fetchMe.fulfilled,
+      (state, action: PayloadAction<AuthResponse>) => {
+        state.data = action.payload;
+        state.status = "loaded";
+      }
+    );
+    builder.addCase(fetchMe.rejected, (state) => {
       state.data = null;
       state.status = "error";
     });
