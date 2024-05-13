@@ -15,7 +15,6 @@ export const Login = () => {
 
   const {
     register,
-
     formState: { errors, isValid },
     handleSubmit,
   } = useForm({
@@ -26,11 +25,19 @@ export const Login = () => {
     mode: "onChange",
   });
 
-  const onSubmit = (data: { email: string; password: string }) => {
-    dispatch(fetchLogin(data));
+  const onSubmit = async (data: { email: string; password: string }) => {
+    try {
+      const result = await dispatch(fetchLogin(data));
+      if (typeof result.payload === "object") {
+        window.localStorage.setItem("token", result?.payload.token);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      }
+    }
   };
 
-  console.log(isAuth);
   if (isAuth) {
     return <Navigate to="/" replace />;
   }

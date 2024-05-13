@@ -6,8 +6,17 @@ import { AddPost } from "./addPost/add-post";
 import { Login } from "./login/login";
 import { Registration } from "./register/register";
 import { Home } from "./home";
+import { useAppDispatch } from "../shared/hooks/redux-hooks";
+import { useEffect } from "react";
+import { fetchMe } from "../entities/store/auth/auth-slice";
 
 function App() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchMe());
+  }, []);
+
   return (
     <>
       <Header />

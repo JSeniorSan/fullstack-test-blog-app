@@ -8,4 +8,7 @@ export class AuthService {
   static registration(email: string, password: string, fullname: string) {
     return axios.post("/auth/register", { email, password, fullname });
   }
+  static fetchMe() {
+    return axios.get("/auth/me");
+  }
 }
