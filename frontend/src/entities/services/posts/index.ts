@@ -8,4 +8,7 @@ export class Posts {
   static getTags() {
     return axios.get("/tags");
   }
+  static fetchImage(formData: FormData) {
+    return axios.post("/upload", formData);
+  }
 }
