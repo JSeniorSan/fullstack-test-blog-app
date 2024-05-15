@@ -6,12 +6,14 @@ import SimpleMDE, { SimpleMDEReactProps } from "react-simplemde-editor";
 
 import "easymde/dist/easymde.min.css";
 import styles from "./addPost.module.scss";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { checkAuth } from "../../entities/store/auth/auth-slice";
+import { Posts } from "../../entities/services/posts";
 
 export const AddPost = () => {
   const isAuth = useSelector(checkAuth);
+  const navigate = useNavigate();
   const ref = useRef<null | HTMLInputElement>(null);
   const [text, setText] = React.useState("");
   const [title, setTitle] = React.useState("");
@@ -20,16 +22,55 @@ export const AddPost = () => {
 
   console.log(imageUrl);
 
-  const handleChangeFile = () => {
-    console.log(ref.current?.value.split("\\")[2]);
-    setImageUrl(ref.current?.value.split("\\")[2]);
+  const handleChangeFile = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    try {
+      const formData = new FormData();
+      const fileUrl =
+        event.currentTarget?.files && event.currentTarget?.files[0];
+      if (fileUrl) {
+        formData.append("image", fileUrl);
+        const { data }: { data: { url: string } } = await Posts.fetchImage(
+          formData
+        );
+        setImageUrl(data.url);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+        alert("cannot get response from server");
+      }
+    }
   };
 
-  const onClickRemoveImage = () => {};
+  const onClickRemoveImage = () => {
+    setImageUrl("");
+
+    if (ref.current) {
+      ref.current.value = "";
+    }
+  };
 
   const onChange = React.useCallback((value: string) => {
     setText(value);
   }, []);
+
+  const onSubmit = async () => {
+    try {
+      const postData = {
+        title,
+        text,
+        tags,
+        imageUrl,
+      };
+
+      await Posts.createPost(postData);
+      navigate("/");
+    } catch (error) {
+      alert(error);
+    }
+  };
 
   const options = React.useMemo(
     () =>
@@ -69,7 +110,7 @@ export const AddPost = () => {
       {imageUrl && (
         <img
           className={styles.image}
-          src={`http://localhost:4000/${imageUrl}`}
+          src={`http://localhost:4000${imageUrl}`}
           alt="Uploaded"
         />
       )}
@@ -80,6 +121,7 @@ export const AddPost = () => {
         variant="standard"
         placeholder="Заголовок статьи..."
         fullWidth
+        value={title}
         onChange={(e) => setTitle(e.currentTarget.value)}
       />
       <TextField
@@ -87,6 +129,7 @@ export const AddPost = () => {
         variant="standard"
         placeholder="Тэги"
         fullWidth
+        value={tags}
         onChange={(e) => setTags(e.currentTarget.value.split(","))}
       />
       <SimpleMDE
@@ -96,7 +139,7 @@ export const AddPost = () => {
         options={options}
       />
       <div className={styles.buttons}>
-        <Button size="large" variant="contained">
+        <Button size="large" variant="contained" onClick={onSubmit}>
           Опубликовать
         </Button>
         <Link to="/">
