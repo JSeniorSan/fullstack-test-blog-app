@@ -65,8 +65,8 @@ export const AddPost = () => {
         imageUrl,
       };
 
-      await Posts.createPost(postData);
-      navigate("/");
+      const { data } = await Posts.createPost(postData);
+      navigate(`/posts/${data._id}`);
     } catch (error) {
       alert(error);
     }

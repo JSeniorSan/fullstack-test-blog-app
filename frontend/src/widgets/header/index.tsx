@@ -17,7 +17,7 @@ const Header = () => {
       <Container maxWidth="lg">
         <div className={styles.inner}>
           <Link to="/">
-            <Button>Vladimir_YK Blog</Button>
+            <Button>Irina_YK Blog</Button>
           </Link>
           <div>
             {isAuth ? (
